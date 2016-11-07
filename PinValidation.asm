@@ -7,8 +7,6 @@ CrLf        PROTO
 WaitMsg     PROTO
 WriteInt    PROTO
 
-byteP typedef ptr byte
-
 .data
     pin1 byte 1,2,3,4,5  ; first digit too small
     pin2 byte 6,3,5,2,4  ; fine
@@ -23,7 +21,6 @@ byteP typedef ptr byte
     problemDigitMsg byte "Problem digit was #",0
     nextPinMsg byte "Next pin...",0
     doneMsg byte "Done!",0
-    iteration byte "iteration",0
 
 .code
     main PROC
@@ -88,7 +85,7 @@ byteP typedef ptr byte
         Iterate:
             ; setup registers
             mov bl, byte ptr [esi]
-            mov dl, [ebp] ; TODO these aren't incrementing
+            mov dl, [ebp]
             mov dh, [edi]
 
             .IF bl < dl
@@ -114,9 +111,6 @@ byteP typedef ptr byte
             inc ebp
             add bh,1  ; counter
 
-            ; debug
-            ; mov edx,OFFSET iteration
-            ; call WriteMessage
         LOOP Iterate
         
         ; test validity of pin
