@@ -12,18 +12,19 @@ WriteOddRow   PROTO times:byte
 WriteSquare   PROTO color:byte
 
 .data
-    whiteSquare = white + (white * 16)
-    graySquare  = gray  + (gray  * 16)
-    default     = white + (black * 16)
-    BOARDSIZE   = 4
+    whiteSquare  = white + (white * 16)
+    graySquare   = gray  + (gray  * 16)
+    default      = white + (black * 16)
+    BOARDROWS    = 8
+    BOARDCOLUMNS = 8
 
 .code
     main PROC
         mov al,' '  ; our chess board character
-        mov ecx,BOARDSIZE ; times to write even and odd rows
+        mov ecx,BOARDCOLUMNS / 2 ; times to write even and odd rows
         WriteBoard:
-            invoke WriteEvenRow, 4
-            invoke WriteOddRow,  4
+            invoke WriteEvenRow, BOARDROWS / 2
+            invoke WriteOddRow,  BOARDROWS / 2
         LOOP WriteBoard
         call RestoreDefaultColor
         call WaitMsg
